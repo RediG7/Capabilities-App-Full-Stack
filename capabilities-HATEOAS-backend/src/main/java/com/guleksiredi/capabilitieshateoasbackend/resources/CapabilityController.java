@@ -4,10 +4,10 @@ import com.guleksiredi.capabilitieshateoasbackend.domain.Capability;
 import com.guleksiredi.capabilitieshateoasbackend.services.CapabilityService;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +55,11 @@ public class CapabilityController {
     @PostMapping
     // returns Capability object or ResponseEntity with validation error messages,
     // so different types but still both (objects) and extend from object class
-    public Object createCapability(@RequestBody Capability capability) {
+    // @Valid -> As parameter we will accept a valid request body of type capability. (Doesn't break any of the constraints that we set up in the domain object)
+    public Object createCapability(@Valid @RequestBody Capability capability, BindingResult result) {
+
+        if (result.hasErrors()) return capabilityService.errorMap(result);
+
 
         Capability newCapability = capabilityService.saveCapability(capability);
 
@@ -63,4 +67,6 @@ public class CapabilityController {
                 linkTo(methodOn(CapabilityController.class).getCapability(newCapability.getId())).withRel("Current Link"),
                 linkTo(methodOn(CapabilityController.class).getAllCapabilities()).withRel("getAllCapabilities"));
     }
+
+
 }
