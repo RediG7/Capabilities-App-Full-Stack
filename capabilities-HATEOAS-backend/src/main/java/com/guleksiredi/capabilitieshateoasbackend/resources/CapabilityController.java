@@ -48,6 +48,19 @@ public class CapabilityController {
         Capability capability = capabilityService.findCapabilityById(id);
 
         return EntityModel.of(capability,
-                linkTo(methodOn(CapabilityController.class).getCapability(id)).withRel("Current Link"));
+                linkTo(methodOn(CapabilityController.class).getCapability(id)).withRel("Current Link"),
+                linkTo(methodOn(CapabilityController.class).getAllCapabilities()).withRel("getAllCapabilities"));
+    }
+
+    @PostMapping
+    // returns Capability object or ResponseEntity with validation error messages,
+    // so different types but still both (objects) and extend from object class
+    public Object createCapability(@RequestBody Capability capability) {
+
+        Capability newCapability = capabilityService.saveCapability(capability);
+
+        return EntityModel.of(newCapability,
+                linkTo(methodOn(CapabilityController.class).getCapability(newCapability.getId())).withRel("Current Link"),
+                linkTo(methodOn(CapabilityController.class).getAllCapabilities()).withRel("getAllCapabilities"));
     }
 }
