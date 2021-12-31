@@ -68,5 +68,15 @@ public class CapabilityController {
                 linkTo(methodOn(CapabilityController.class).getAllCapabilities()).withRel("getAllCapabilities"));
     }
 
+    @PutMapping("/{id}")
+    public Object updateCapability(@PathVariable Long id, @Valid @RequestBody Capability capability, BindingResult result) {
+        if (result.hasErrors()) return capabilityService.errorMap(result);
+
+        Capability capabilityToUpdate = capabilityService.updateCapability(id, capability);
+
+        return EntityModel.of(capabilityToUpdate,
+                linkTo(methodOn(CapabilityController.class).getCapability(capabilityToUpdate.getId())).withRel("Current Link (Capability)"),
+                linkTo(methodOn(CapabilityController.class).getAllCapabilities()).withRel("getAllCapabilities"));
+    }
 
 }
