@@ -70,4 +70,9 @@ public class CapabilityService {
             return capabilityRepository.save(capability);
         });
     }
+
+    public void deleteCapability(Long id) {
+        capabilityRepository.delete(capabilityRepository.findById(id)
+                .orElseThrow(() -> new CapabilityException("Capability with ID: " + id + " was not found!")));
+    }
 }
