@@ -28,7 +28,11 @@ class UpdateIcon extends Component {
           style={{ color: "blue", fontSize: "22px", marginLeft: "8px" }}
           onClick={this.openModal}
         />
-        <Modal isOpen={this.state.modalIsOpen} style={customStyles}>
+        <Modal
+          ariaHideApp={false}
+          isOpen={this.state.modalIsOpen}
+          style={customStyles}
+        >
           <button
             type="button"
             className="btn btn-danger mb-2"
