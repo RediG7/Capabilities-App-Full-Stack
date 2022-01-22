@@ -18,7 +18,7 @@ export class UpdateCapability extends Component {
                 name="techStack"
                 value=""
                 className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.techStack
+                  "is-invalid": errors.techStack,
                 })}
               />
               {errors.techStack && (
@@ -51,6 +51,7 @@ export class UpdateCapability extends Component {
               type="submit"
               value="Update Capability"
               className="btn btn-danger btn-block"
+              style={{ marginTop: "12px", width: "100%" }}
             />
           </form>
         </div>

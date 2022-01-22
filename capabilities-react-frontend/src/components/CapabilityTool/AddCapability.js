@@ -16,7 +16,7 @@ export class AddCapability extends Component {
                 name="techStack"
                 value=""
                 className={classnames("form-control form-control-lg", {
-                  "is-invalid": errors.techStack
+                  "is-invalid": errors.techStack,
                 })}
               />
               {errors.techStack && (
@@ -46,6 +46,7 @@ export class AddCapability extends Component {
               />
             </div>
             <input
+              style={{ marginTop: "12px", width: "100%" }}
               type="submit"
               value="Add Capability"
               className="btn btn-primary btn-block"
