@@ -3,6 +3,7 @@ import {
   GET_CAPABILITIES,
   DELETE_CAPABILITY,
   ADD_CAPABILITY,
+  GET_ERRORS,
 } from "./ActionTypes";
 
 export const getAllCapabilities = () => async (dispatch) => {
@@ -11,11 +12,13 @@ export const getAllCapabilities = () => async (dispatch) => {
     dispatch({
       type: GET_CAPABILITIES,
       payload: res.data._embedded.capabilityList,
+      links: res.data._links,
     });
   } catch (error) {
     dispatch({
       type: GET_CAPABILITIES,
       payload: [],
+      links: {},
     });
   }
 };
@@ -29,12 +32,25 @@ export const deleteCapability = (id, deleteLink) => async (dispatch) => {
   });
 };
 
-export const addCapability = (capability, closeModal) => async (dispatch) => {
-  const res = await axios.post("http://localhost:8080/dashboard", capability);
-  closeModal();
+export const addCapability = (capability, closeModal, postLink) => async (
+  dispatch
+) => {
+  try {
+    const res = await axios.post(postLink, capability);
+    closeModal();
 
-  dispatch({
-    type: ADD_CAPABILITY,
-    payload: res.data,
-  });
+    dispatch({
+      type: ADD_CAPABILITY,
+      payload: res.data,
+    });
+    dispatch({
+      type: GET_ERRORS,
+      payload: {},
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data,
+    });
+  }
 };
