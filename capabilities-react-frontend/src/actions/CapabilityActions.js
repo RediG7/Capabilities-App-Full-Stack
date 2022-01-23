@@ -4,6 +4,8 @@ import {
   DELETE_CAPABILITY,
   ADD_CAPABILITY,
   GET_ERRORS,
+  GET_CAPABILITY,
+  CLEAR_CAPABILITY_CLOSE_MODAL,
 } from "./ActionTypes";
 
 export const getAllCapabilities = () => async (dispatch) => {
@@ -53,4 +55,18 @@ export const addCapability = (capability, closeModal, postLink) => async (
       payload: error.response.data,
     });
   }
+};
+
+export const getCapabilityById = (id) => async (dispatch) => {
+  dispatch({
+    type: GET_CAPABILITY,
+    payload: id,
+  });
+};
+
+export const closeModalClearState = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_CAPABILITY_CLOSE_MODAL,
+    payload: {},
+  });
 };
