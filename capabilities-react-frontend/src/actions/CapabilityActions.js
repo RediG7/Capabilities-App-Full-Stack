@@ -9,21 +9,51 @@ import {
   UPDATE_CAPABILITY,
 } from "./ActionTypes";
 
+const clearErrors = () => ({
+  type: GET_ERRORS,
+  payload: {},
+});
+
+const instance = axios.create({
+  baseURL: `${process.env.REACT_APP_BASE_URL_LOCAL}`,
+});
+
+// const HerokuInstance = axios.create({
+//   baseURL: "",
+// });
+
 export const getAllCapabilities = () => async (dispatch) => {
-  try {
-    const res = await axios.get("http://localhost:8080/dashboard");
-    dispatch({
-      type: GET_CAPABILITIES,
-      payload: res.data._embedded.capabilityList,
-      links: res.data._links,
+  // try {
+  //   const res = await instance.get();
+  //   dispatch({
+  //     type: GET_CAPABILITIES,
+  //     payload: res.data._embedded.capabilityList,
+  //     links: res.data._links,
+  //   });
+  // } catch (error) {
+  //   dispatch({
+  //     type: GET_CAPABILITIES,
+  //     payload: [],
+  //     links: {},
+  //   });
+  // }
+  // WITH PROMISES
+  await instance
+    .get()
+    .then((res) => {
+      dispatch({
+        type: GET_CAPABILITIES,
+        payload: res.data._embedded.capabilityList,
+        links: res.data._links,
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: GET_CAPABILITIES,
+        payload: [],
+        links: {},
+      });
     });
-  } catch (error) {
-    dispatch({
-      type: GET_CAPABILITIES,
-      payload: [],
-      links: {},
-    });
-  }
 };
 
 export const deleteCapability = (id, deleteLink) => async (dispatch) => {
@@ -46,10 +76,11 @@ export const addCapability = (capability, closeModal, postLink) => async (
       type: ADD_CAPABILITY,
       payload: res.data,
     });
-    dispatch({
-      type: GET_ERRORS,
-      payload: {},
-    });
+    // dispatch({
+    //   type: GET_ERRORS,
+    //   payload: {},
+    // });
+    dispatch(clearErrors());
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
@@ -74,6 +105,7 @@ export const closeModalClearState = () => async (dispatch) => {
       numOfAvailableDevelopers: 0,
     },
   });
+  dispatch(clearErrors());
 };
 
 export const updateCapability = (capability, closeModal, updateLink) => async (
@@ -86,10 +118,7 @@ export const updateCapability = (capability, closeModal, updateLink) => async (
       type: UPDATE_CAPABILITY,
       payload: res.data,
     });
-    dispatch({
-      type: GET_ERRORS,
-      payload: {},
-    });
+    dispatch(clearErrors());
   } catch (error) {
     dispatch({
       type: GET_ERRORS,
