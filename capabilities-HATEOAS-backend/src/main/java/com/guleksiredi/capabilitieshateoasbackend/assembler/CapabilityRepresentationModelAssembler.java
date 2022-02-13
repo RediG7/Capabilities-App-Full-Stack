@@ -20,7 +20,7 @@ public class CapabilityRepresentationModelAssembler implements RepresentationMod
                 linkTo(methodOn(CapabilityController.class).getCapability(entity.getId())).withRel("getThisCapability"),
                 linkTo(methodOn(CapabilityController.class).deleteCapability(entity.getId())).withRel("deleteThisCapability"),
                 linkTo(methodOn(CapabilityController.class).getAllCapabilities()).withRel("getAllCapabilities"),
-                Link.of("https://capabilities-app.herokuapp.com/dashboard/" + entity.getId()).withRel("updateThisCapability")
+                Link.of("https://capabilities-app-backend.herokuapp.com/dashboard/" + entity.getId()).withRel("updateThisCapability")
         );
     }
 
