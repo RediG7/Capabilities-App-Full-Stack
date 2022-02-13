@@ -48,7 +48,7 @@ public class CapabilityController {
 
         return CollectionModel.of(capabilityService.getAllCapabilities().stream()
                         .map(assembler::toModel).collect(Collectors.toList()),
-                Link.of("http://localhost:8080/dashboard").withRel("createCapability")
+                Link.of("https://capabilities-app.herokuapp.com/dashboard").withRel("createCapability")
         );
         // map(capability -> assembler.toModel(capability)) converted to .map(assembler::toModel)
         // Lambda -> To Method Reference
