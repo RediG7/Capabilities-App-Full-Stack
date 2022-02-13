@@ -14,13 +14,13 @@ const clearErrors = () => ({
   payload: {},
 });
 
-const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_BASE_URL_LOCAL}`,
-});
-
-// const HerokuInstance = axios.create({
-//   baseURL: "",
+// const instance = axios.create({
+//   baseURL: `${process.env.REACT_APP_BASE_URL_LOCAL}`,
 // });
+
+const HerokuInstance = axios.create({
+  baseURL: `${process.env.REACT_APP_BASE_URL_HEROKU}`,
+});
 
 export const getAllCapabilities = () => async (dispatch) => {
   // try {
@@ -38,8 +38,7 @@ export const getAllCapabilities = () => async (dispatch) => {
   //   });
   // }
   // WITH PROMISES
-  await instance
-    .get()
+  await HerokuInstance.get()
     .then((res) => {
       dispatch({
         type: GET_CAPABILITIES,

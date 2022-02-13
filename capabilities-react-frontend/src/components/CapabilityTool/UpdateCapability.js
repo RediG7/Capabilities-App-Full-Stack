@@ -73,7 +73,6 @@ export class UpdateCapability extends Component {
 
   render() {
     const { errors } = this.state;
-    console.log("techStack: " + this.state.techStack);
 
     return (
       <div className="card mb-3">
